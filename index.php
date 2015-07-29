@@ -25,7 +25,7 @@
 		<div class="content">
 			<div class="button-cont">
 				<p>
-					CHOICES: glog_product,glog_product_lang,glog_product_sale
+					CHOICES: glog_product,glog_product_lang,glog_product_sale,glog_attribute,glog_product_attribute
 					<br>
 					<br>
 				   Tables to update, seperated by commas. This will update from left to right.
