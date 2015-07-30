@@ -143,10 +143,15 @@ for($i = 0 ; $i <= (sizeof($arr)/12)-1 ; $i++)//AllData/columnsPerData
 
 
 
-$deletesql .= "(".$id_product[$i].",".$id_shop[$i].",".$id_lang[$i]."),";
+$deletesql .= "(".$id_product[$i].",".$id_shop[$i].",".$id_lang[$i]."),";//composite primary key (key1,key2,key3),
 }
 $deletesql = rtrim($deletesql, ',');
 $deletesql .= ");";
+
+if($id_product == NULL )
+{
+	$deletesql = "DELETE FROM `glog_product_lang`;";
+}
 
 mysql_query($deletesql);
 

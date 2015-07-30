@@ -25,12 +25,12 @@
 		<div class="content">
 			<div class="button-cont">
 				<p>
-					CHOICES: glog_product,glog_product_lang,glog_product_sale,glog_attribute,glog_product_attribute
+					CHOICES: glog_product,glog_product_lang,glog_product_sale,glog_attribute_group,glog_attribute,glog_product_attribute,glog_attribute_group_lang,glog_product_attribute_combination
 					<br>
 					<br>
 				   Tables to update, seperated by commas. This will update from left to right.
 				 </p>
-				<textarea class="tablesuccession"/>glog_product,glog_product_lang,glog_product_sale,glog_attribute,glog_product_attribute</textarea>
+				<textarea class="tablesuccession"/>glog_product,glog_product_lang,glog_product_sale,glog_attribute_group,glog_attribute,glog_product_attribute,glog_attribute_group_lang,glog_product_attribute_combination</textarea>
 				<br>
 				<button id="update-btn">Update</button>
 			</div>
