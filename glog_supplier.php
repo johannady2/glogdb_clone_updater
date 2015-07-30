@@ -2,7 +2,7 @@
 $conn = mysql_connect("127.0.0.1", "root", "");
 mysql_select_db("glogdb_clone");
 
-$data = json_decode(file_get_contents("http://g-log.co/ForI5/?table=glog_attribute_impact"),true);
+$data = json_decode(file_get_contents("http://g-log.co/ForI5/?table=glog_supplier"),true);
 
 $arr = array();
 
@@ -38,35 +38,37 @@ foreach($data as $index=> $value)
 }
 
 //var_dump($arr);
-$id_attribute_impact = array();
-$id_product = array();
-$id_attribute = array();
-$price = array();
+$id_supplier = array();
+$name = array();
+$date_add = array();
+$date_upd = array();
+$active = array();
 
 foreach($arr as $key => $value)
 {
 	foreach($value as $as => $info)
 	{
-		if($as == 'id_attribute_impact')
+		if($as == 'id_supplier')
 		{
-			array_push($id_attribute_impact, $info);
+			array_push($id_supplier, intval($info));
 		}
-		else if($as == 'id_product')
+		else if($as == 'name')
 		{
-			array_push($id_product, $info);
+			array_push($name , addslashes($info));
 		}
-		else if($as == 'id_attribute')
+		else if($as == 'date_add')
 		{
-			array_push($id_attribute, $info);
+			array_push($date_add , addslashes($info));
 		}
-		else if($as == 'weight')
+		else if($as == 'date_upd')
 		{
-			array_push($weight , $info);
+			array_push($date_upd , addslashes($info));
 		}
-		else if($as == 'price')
+		else if($as == 'active')
 		{
-			array_push($price , $info);
+			array_push($active , $info);
 		}
+		
 	
 	}
 }
@@ -79,21 +81,29 @@ $errors = array();
 
 for($i = 0 ; $i <= (sizeof($arr)/5)-1 ; $i++)//AllData/columnsPerData
 {
+	//$selectquery = "SELECT *  FROM glog_product WHERE id_product =".$id_product[$i];
+	//$result = mysql_query($selectquery,$conn);
+	//$numrows = mysql_num_rows($result);
+	
+	
+	
+	//echo "<h1>".mysql_errno($conn) . ": " . mysql_error($conn) . "\n</h1>";
 
+	
 	if(mysql_error($conn) != "")
 	{
 		echo mysql_error($conn);
 		array_push($errors, mysql_error($conn));
 	}
 	//echo $id_product[$i].'- Numrrows = '.$numrows.'<br>';
-	 
+	
 			
 	
 		
-			//echo 'replaced into '.$id_attribute[$i] . '<br>';
-			mysql_query("REPLACE INTO glogdb_clone.glog_attribute_impact (id_attribute_impact,id_product,id_attribute,weight,price)VALUES(".$id_attribute_impact[$i].",".$id_product[$i].",".$id_attribute[$i].",".$weight[$i].",".$price[$i].");",$conn);
+			//echo 'replaced into '.$id_product[$i] . '<br>';
+			mysql_query("REPLACE INTO glogdb_clone.glog_supplier(id_supplier,name,date_add,date_upd,active)VALUES(".$id_supplier[$i].",'".$name[$i]."','".$date_add[$i]."','".$date_upd[$i]."',".$active[$i].");",$conn);
 		
-		$insertedIds .= $id_attribute_impact[$i].",";
+		$insertedIds .= $id_supplier[$i].",";
 		
 		
 		if(mysql_error($conn) != "")
@@ -109,15 +119,15 @@ for($i = 0 ; $i <= (sizeof($arr)/5)-1 ; $i++)//AllData/columnsPerData
 }
 
 
-$id_attribute_impacts_IMPOLODED = implode(', ', $id_attribute_impact);
-if($id_attribute_impacts_IMPOLODED != NULL)
+$id_suppliers_IMPOLODED = implode(', ', $id_supplier);
+if($id_suppliers_IMPOLODED != NULL)
 {
-	$deletesql = "DELETE FROM glog_attribute_impact WHERE id_attribute_impact NOT IN (".$id_attribute_impacts_IMPOLODED.")";
+	$deletesql = "DELETE FROM glog_supplier WHERE id_supplier NOT IN (".$id_suppliers_IMPOLODED.")";
 }
 else
 {
 
-	$deletesql = "DELETE FROM `glog_attribute_impact`;";
+	$deletesql = "DELETE FROM `glog_supplier`;";
 
 }
 
