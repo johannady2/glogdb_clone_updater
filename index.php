@@ -25,7 +25,6 @@
 		<div class="content">
 
 			<br>
-			<textarea class="tablesuccession"/>glog_supplier_lang,glog_supplier,glog_attribute_group_lang,glog_attribute_lang,glog_attribute_impact,glog_attribute_group,glog_attribute,glog_product_lang,glog_product_sale,glog_product_attribute,glog_product,glog_product_attribute_combination</textarea>
 			<br>
 			<button id="update-btn">Update</button>
 		
