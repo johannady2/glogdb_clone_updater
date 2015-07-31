@@ -2,7 +2,7 @@
 $conn = mysql_connect("127.0.0.1", "root", "");
 mysql_select_db("glogdb_clone");
 
-$data = json_decode(file_get_contents("http://g-log.co/ForI5/?table=glog_supplier"),true);
+$data = json_decode(file_get_contents("http://g-log.co/ForI5/?table=glog_order_cart_rule"),true);
 
 $arr = array();
 
@@ -38,35 +38,50 @@ foreach($data as $index=> $value)
 }
 
 //var_dump($arr);
-$id_supplier = array();
+$id_order_cart_rule = array();
+$id_order = array();
+$id_cart_rule = array();
+$id_order_invoice = array();
 $name = array();
-$date_add = array();
-$date_upd = array();
-$active = array();
+//$value = array();
+$value_tax_excl = array();
+$free_shipping = array();
 
 foreach($arr as $key => $value)
 {
 	foreach($value as $as => $info)
 	{
-		if($as == 'id_supplier')
+		if($as == 'id_order_cart_rule')
 		{
-			array_push($id_supplier, intval($info));
+			array_push($id_order_cart_rule, intval($info));
+		}
+		else if($as == 'id_order')
+		{
+			array_push($id_order , $info);
+		}
+		else if($as == 'id_cart_rule')
+		{
+			array_push($id_cart_rule , $info);
+		}
+		else if($as == 'id_order_invoice')
+		{
+			array_push($id_order_invoice , $info);
 		}
 		else if($as == 'name')
 		{
 			array_push($name , addslashes($info));
 		}
-		else if($as == 'date_add')
+		/*else if($as == 'value')
 		{
-			array_push($date_add , addslashes($info));
+			array_push($value , $info);
+		}*/
+		else if($as == 'value_tax_excl')
+		{
+			array_push($value_tax_excl , $info);
 		}
-		else if($as == 'date_upd')
+		else if($as == 'free_shipping')
 		{
-			array_push($date_upd , addslashes($info));
-		}
-		else if($as == 'active')
-		{
-			array_push($active , $info);
+			array_push($free_shipping , $info);
 		}
 		
 	
@@ -79,7 +94,7 @@ $updatedIds = "";
 $errors = array();
 
 
-for($i = 0 ; $i <= (sizeof($arr)/5)-1 ; $i++)//AllData/columnsPerData
+for($i = 0 ; $i <= (sizeof($arr)/8)-1 ; $i++)//AllData/columnsPerData
 {
 	//$selectquery = "SELECT *  FROM glog_product WHERE id_product =".$id_product[$i];
 	//$result = mysql_query($selectquery,$conn);
@@ -101,9 +116,9 @@ for($i = 0 ; $i <= (sizeof($arr)/5)-1 ; $i++)//AllData/columnsPerData
 	
 		
 			//echo 'replaced into '.$id_product[$i] . '<br>';
-			mysql_query("REPLACE INTO glogdb_clone.glog_supplier(id_supplier,name,date_add,date_upd,active)VALUES(".$id_supplier[$i].",'".$name[$i]."','".$date_add[$i]."','".$date_upd[$i]."',".$active[$i].");",$conn);
+			mysql_query("REPLACE INTO glogdb_clone.glog_order_cart_rule(id_order_cart_rule,id_order,id_cart_rule,id_order_invoice,name,value_tax_excl,free_shipping)VALUES(".$id_order_cart_rule[$i].",".$id_order[$i].",".$id_cart_rule[$i].",".$id_order_invoice[$i].",'".$name[$i]."',".$value_tax_excl[$i].",".$free_shipping[$i].");",$conn);
 		
-		$insertedIds .= $id_supplier[$i].",";
+		$insertedIds .= $id_order_cart_rule[$i].",";
 		
 		
 		if(mysql_error($conn) != "")
@@ -119,15 +134,15 @@ for($i = 0 ; $i <= (sizeof($arr)/5)-1 ; $i++)//AllData/columnsPerData
 }
 
 
-$id_suppliers_IMPOLODED = implode(', ', $id_supplier);
-if($id_suppliers_IMPOLODED != NULL)
+$id_order_cart_rules_IMPOLODED = implode(', ', $id_order_cart_rule);
+if($id_order_cart_rules_IMPOLODED != NULL)
 {
-	$deletesql = "DELETE FROM glog_supplier WHERE id_supplier NOT IN (".$id_suppliers_IMPOLODED.")";
+	$deletesql = "DELETE FROM glog_order_cart_rule WHERE id_order_cart_rule NOT IN (".$id_order_cart_rules_IMPOLODED.")";
 }
 else
 {
 
-	$deletesql = "DELETE FROM `glog_supplier`;";
+	$deletesql = "DELETE FROM `glog_order_cart_rule`;";
 
 }
 
