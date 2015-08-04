@@ -2,7 +2,7 @@
 $conn = mysql_connect("127.0.0.1", "root", "");
 mysql_select_db("glogdb_clone");
 
-$data = json_decode(file_get_contents("http://g-log.co/ForI5/?table=glog_address"),true);
+$data = json_decode(file_get_contents("http://g-log.co/ForI5/?table=glog_state"),true);
 
 $arr = array();
 
@@ -38,131 +38,42 @@ foreach($data as $index=> $value)
 }
 
 //var_dump($arr);
-$id_address = array();
-$id_country = array();
 $id_state = array();
-$id_customer = array();
-$id_manufacturer = array();
-$id_supplier = array();
-$id_warehouse = array();
-$alias = array();
-$company = array();
-$lastname = array();
-$firstname = array();
-$address1 = array();
-$address2 = array();
-$postcode = array();
-$city = array();
-$other = array();
-$phone = array();
-$phone_mobile = array();
-$vat_number = array();
-$dni = array();
-$date_add = array();
-$date_upd = array();
-$active = array();
-$deleted = array();
+$id_country = array();
+$id_zone = array();
+$name = array();
+$iso_code = array();
+$tax_behavior = array();
 
 foreach($arr as $key => $value)
 {
 	foreach($value as $as => $info)
 	{
-		if($as == 'id_address')
-		{
-			array_push($id_address, $info);
-		}
-		else if($as == 'id_country')
-		{
-			array_push($id_country, $info);
-		}
-		else if($as == 'id_state')
+		if($as == 'id_state')
 		{
 			array_push($id_state, $info);
 		}
-		else if($as == 'id_customer')
+		else if($as == 'id_country')
 		{
-			array_push($id_customer, $info);
+			array_push($id_country ,$info);
 		}
-		else if($as == 'id_manufacturer')
+		else if($as == 'id_zone')
 		{
-			array_push($id_manufacturer, $info);
+			array_push($id_zone ,$info);
 		}
-		else if($as == 'id_supplier')
+		else if($as == 'name')
 		{
-			array_push($id_supplier, $info);
+			array_push($name , addslashes($info));
 		}
-		else if($as == 'id_warehouse')
+		else if($as == 'iso_code')
 		{
-			array_push($id_warehouse, $info);
+			 array_push($iso_code ,addslashes($info));
 		}
-		else if($as == 'alias')
+		else if($as == 'tax_behavior')
 		{
-			array_push($alias, addslashes($info));
+			array_push($tax_behavior , $info);
 		}
-		else if($as == 'company')
-		{
-			array_push($company, addslashes($info));
-		}
-		else if($as == 'lastname')
-		{
-			array_push($lastname, addslashes($info));
-		}
-		else if($as == 'firstname')
-		{
-			array_push($firstname, addslashes($info));
-		}
-		else if($as == 'address1')
-		{
-			array_push($address1, addslashes($info));
-		}
-		else if($as == 'address2')
-		{
-			array_push($address2, addslashes($info));
-		}
-		else if($as == 'postcode')
-		{
-			array_push($postcode, addslashes($info));
-		}
-		else if($as == 'city')
-		{
-			array_push($city, addslashes($info));
-		}
-		else if($as == 'other')
-		{
-			array_push($other , addslashes($info));
-		}
-		else if($as == 'phone')
-		{
-			array_push($phone , addslashes($info));
-		}
-		else if($as == 'phone_mobile')
-		{
-			array_push($phone_mobile , addslashes($info));
-		}
-		else if($as == 'vat_number')
-		{
-			array_push($vat_number , addslashes($info));
-		}
-		else if($as == 'dni')
-		{
-			array_push($dni , addslashes($info));
-		}
-		else if($as == 'date_add')
-		{
-			array_push($date_add , addslashes($info));
-		}
-		else if($as == 'date_upd')
-		{
-			array_push($date_upd , addslashes($info));
-		}
-		else if($as == 'active')
-		{
-			array_push($active , $info);
-		}
-		else if($as == 'deleted')
-		{
-			array_push($deleted , $info);
-		}
+		
 	}
 }
 
@@ -186,9 +97,9 @@ for($i = 0 ; $i <= (sizeof($arr)/24)-1 ; $i++)//AllData/columnsPerData
 	
 		
 			//echo 'replaced into '.$id_attribute[$i] . '<br>';
-			mysql_query("REPLACE INTO glogdb_clone.glog_address (id_address,id_country,id_state,id_customer,id_manufacturer,id_supplier,id_warehouse,alias,company,lastname,firstname,address1,address2,postcode,city,other,phone,phone_mobile,vat_number,dni,date_add,date_upd,active,deleted)VALUES(".$id_address[$i].",".$id_country[$i].",".$id_state[$i].",".$id_customer[$i].",".$id_manufacturer[$i].",".$id_supplier[$i].",".$id_warehouse[$i].",'".$alias[$i]."','".$company[$i]."','".$lastname[$i]."','".$firstname[$i]."','".$address1[$i]."','".$address2[$i]."','".$postcode[$i]."','".$city[$i]."','".$other[$i]."','".$phone[$i]."','".$phone_mobile[$i]."','".$vat_number[$i]."','".$dni[$i]."','".$date_add[$i]."','".$date_upd[$i]."',".$active[$i].",".$deleted[$i].");",$conn);
+			mysql_query("REPLACE INTO glogdb_clone.glog_state (id_state,id_country,id_zone,name,iso_code,tax_behavior)VALUES(".$id_state[$i].",".$id_country[$i].",".$id_zone[$i].",'".$name[$i]."','".$iso_code[$i]."',".$tax_behavior[$i].");",$conn);
 		
-		$insertedIds .= $id_address[$i].",";
+		$insertedIds .= $id_state[$i].",";
 		
 		
 		if(mysql_error($conn) != "")
@@ -204,15 +115,15 @@ for($i = 0 ; $i <= (sizeof($arr)/24)-1 ; $i++)//AllData/columnsPerData
 }
 
 
-$id_addresss_IMPOLODED = implode(', ', $id_address);
-if($id_addresss_IMPOLODED != NULL)
+$id_states_IMPOLODED = implode(', ', $id_state);
+if($id_states_IMPOLODED != NULL)
 {
-	$deletedsql = "deleted FROM glog_address WHERE id_address NOT IN (".$id_addresss_IMPOLODED.")";
+	$deletedsql = "deleted FROM glog_state WHERE id_state NOT IN (".$id_states_IMPOLODED.")";
 }
 else
 {
 
-	$deletedsql = "deleted FROM `glog_address`;";
+	$deletedsql = "deleted FROM `glog_state`;";
 
 }
 
