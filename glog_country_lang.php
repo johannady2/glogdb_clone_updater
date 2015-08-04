@@ -2,7 +2,7 @@
 $conn = mysql_connect("127.0.0.1", "root", "");
 mysql_select_db("glogdb_clone");
 
-$data = json_decode(file_get_contents("http://g-log.co/ForI5/?table=glog_attribute_lang"),true);
+$data = json_decode(file_get_contents("http://g-log.co/ForI5/?table=glog_country_lang"),true);
 
 $arr = array();
 
@@ -38,7 +38,7 @@ foreach($data as $index=> $value)
 }
 
 //var_dump($arr);
-$id_attribute = array();
+$id_country = array();
 $id_lang = array();
 $name = array();
 
@@ -46,9 +46,9 @@ foreach($arr as $key => $value)
 {
 	foreach($value as $as => $info)
 	{
-		if($as == 'id_attribute')
+		if($as == 'id_country')
 		{
-			array_push($id_attribute, intval($info));
+			array_push($id_country, intval($info));
 		}
 		else if($as == 'id_lang')
 		{
@@ -68,7 +68,7 @@ $insertedIds = "";
 $updatedIds = "";
 $errors = array();
 
-$deletesql = "DELETE FROM glog_attribute_lang WHERE (id_attribute,id_lang) NOT IN (";
+$deletesql = "DELETE FROM glog_country_lang WHERE (id_country,id_lang) NOT IN (";
 for($i = 0 ; $i <= (sizeof($arr)/3)-1 ; $i++)//AllData/columnsPerData
 {
 
@@ -84,9 +84,9 @@ for($i = 0 ; $i <= (sizeof($arr)/3)-1 ; $i++)//AllData/columnsPerData
 	
 		
 		//echo 'replaced into '.$id_product[$i] . '-' . $id_shop[$i] .'-'.$id_lang[$i].'<br>';
-		mysql_query("REPLACE INTO glogdb_clone.glog_attribute_lang(id_attribute,id_lang,name)VALUES(".$id_attribute[$i].",".$id_lang[$i].",'".$name[$i]."');",$conn);
+		mysql_query("REPLACE INTO glogdb_clone.glog_country_lang(id_country,id_lang,name)VALUES(".$id_country[$i].",".$id_lang[$i].",'".$name[$i]."');",$conn);
 		
-		$insertedIds .= '['.$id_attribute[$i].'-'.$id_lang[$i].'],';
+		$insertedIds .= '['.$id_country[$i].'-'.$id_lang[$i].'],';
 		
 		
 		if(mysql_error($conn) != "")
@@ -98,14 +98,14 @@ for($i = 0 ; $i <= (sizeof($arr)/3)-1 ; $i++)//AllData/columnsPerData
 
 
 
-$deletesql .= "(".$id_attribute[$i].",".$id_lang[$i]."),";//composite primary key (key1,key2,key3),
+$deletesql .= "(".$id_country[$i].",".$id_lang[$i]."),";//composite primary key (key1,key2,key3),
 }
 $deletesql = rtrim($deletesql, ',');
 $deletesql .= ");";
 
-if($id_attribute == NULL )
+if($id_country == NULL )
 {
-	$deletesql = "DELETE FROM `glog_attribute_lang`;";
+	$deletesql = "DELETE FROM `glog_country_lang`;";
 }
 
 mysql_query($deletesql);
