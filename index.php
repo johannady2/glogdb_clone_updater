@@ -25,7 +25,7 @@
 		<div class="content">
 
 			<br>
-			<textarea class="tablesuccession"/>glog_state,glog_country_lang,glog_country,glog_address,glog_order_state_lang,glog_order_state,glog_order_history,glog_carrier,glog_cart_rule,glog_order_cart_rule,glog_message,glog_orders,glog_guest,glog_customer,glog_category_product,glog_category_lang,glog_category_group,glog_category,glog_manufacturer,glog_supplier_lang,glog_supplier,glog_attribute_group_lang,glog_attribute_lang,glog_attribute_impact,glog_attribute_group,glog_attribute,glog_product_lang,glog_product_sale,glog_product_attribute,glog_product,glog_product_attribute_combination,glog_stock_available</textarea>
+			<textarea class="tablesuccession"/>glog_order_detail,glog_state,glog_country_lang,glog_country,glog_address,glog_order_state_lang,glog_order_state,glog_order_history,glog_carrier,glog_cart_rule,glog_order_cart_rule,glog_message,glog_orders,glog_guest,glog_customer,glog_category_product,glog_category_lang,glog_category_group,glog_category,glog_manufacturer,glog_supplier_lang,glog_supplier,glog_attribute_group_lang,glog_attribute_lang,glog_attribute_impact,glog_attribute_group,glog_attribute,glog_product_lang,glog_product_sale,glog_product_attribute,glog_product,glog_product_attribute_combination,glog_stock_available</textarea>
 			<br>
 			<button id="update-btn">Update</button>
 		

@@ -46,6 +46,19 @@ $url = array();
 $active = array();
 $deleted = array();
 $shipping_handling = array();
+$range_behavior = array();
+$is_module = array();
+$is_free = array();
+$shipping_external = array();
+$need_range= array();
+$external_module_name = array();
+$shipping_method = array();
+$position = array();
+$max_width = array();
+$max_height = array();
+$max_depth  = array();
+$max_weight = array();
+$grade = array();
 
 foreach($arr as $key => $value)
 {
@@ -83,7 +96,58 @@ foreach($arr as $key => $value)
 		{
 			array_push($shipping_handling ,$info);
 		}
-	
+		else if($as == 'range_behavior')
+		{
+			array_push($range_behavior ,$info);
+		}
+		else if($as == 'is_module')
+		{
+			array_push($is_module , $info);
+		}
+		else if($as == 'is_free')
+		{
+			array_push($is_free ,$info);
+		}
+		else if($as == 'shipping_external')
+		{
+			array_push($shipping_external ,$info);
+		}
+		else if($as == 'need_range')
+		{
+			array_push($need_range , $info);
+		}
+		else if($as == 'external_module_name')
+		{
+			array_push($external_module_name , addslashes($info));
+		}
+		else if($as == 'shipping_method')
+		{
+			array_push($shipping_method , $info);
+		}
+		else if($as == 'position')
+		{
+			array_push($position ,$info);
+		}
+		else if($as == 'max_width')
+		{
+			array_push($max_width ,$info);
+		}
+		else if($as == 'max_height')
+		{
+			array_push($max_height ,$info);
+		}
+		else if($as == 'max_depth')
+		{
+			array_push($max_depth ,$info);
+		}
+		else if($as == 'max_weight')
+		{
+			array_push($max_weight ,$info);
+		}
+		else if($as == 'grade')
+		{
+			array_push($grade , $info);
+		}
 	}
 }
 
@@ -107,7 +171,7 @@ for($i = 0 ; $i <= (sizeof($arr)/22)-1 ; $i++)//AllData/columnsPerData
 	
 		
 			//echo 'replaced into '.$id_carrier[$i] . '<br>';
-			mysql_query("REPLACE INTO glogdb_clone.glog_carrier (id_carrier,id_reference,id_tax_rules_group,name,url,active,deleted,shipping_handling)VALUES(".$id_carrier[$i].",".$id_reference[$i].",".$id_tax_rules_group[$i].",'".$name[$i]."','".$url[$i]."',".$active[$i].",".$deleted[$i].",".$shipping_handling[$i].");",$conn);
+			mysql_query("REPLACE INTO glogdb_clone.glog_carrier (id_carrier,id_reference,id_tax_rules_group,name,url,active,deleted,shipping_handling,range_behavior,is_module,is_free,shipping_external,need_range,external_module_name,shipping_method,position,max_width,max_height,max_depth,max_weight,grade)VALUES(".$id_carrier[$i].",".$id_reference[$i].",".$id_tax_rules_group[$i].",'".$name[$i]."','".$url[$i]."',".$active[$i].",".$deleted[$i].",".$shipping_handling[$i].",".$range_behavior[$i].",".$is_module[$i].",".$is_free[$i].",".$shipping_external[$i].",".$need_range[$i].",'".$external_module_name[$i]."',".$shipping_method[$i].",".$position[$i].",".$max_width[$i].",".$max_height[$i].",".$max_depth[$i].",".$max_weight[$i].",".$grade[$i].");",$conn);
 		
 		$insertedIds .= $id_carrier[$i].",";
 		
@@ -150,12 +214,13 @@ if(sizeof($errors)>1)
 }
 else
 {
+	
 	$email_message .="success";
 }
 $errors = array_unique($errors);
 
 
-
+            
 
 		$email_message .= '</br>Number of errors:'. sizeof($errors);
 		$email_message .= "<br>Replace Into:".$insertedIds."<br>";
