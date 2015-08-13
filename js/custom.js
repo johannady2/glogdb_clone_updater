@@ -2,19 +2,30 @@ var updatingicon = '<img src="img/updating.gif" class="status-icon">';
 var successicon = '<img src="img/check.png" class="status-icon">';
 var tablesuccessionarr = $('.tablesuccession').val().split(',');
 var lastTableIndex = tablesuccessionarr.length-1;
+var countdownmiliseconds = 3600000;
+
+$(document).ready(function()
+{
+	startUpdating();
+	$("#countdown").countdown({
+		until: new Date(new Date().getTime() + (countdownmiliseconds )),onExpiry:  function() { location.reload(); }
+	});
+	
+	
+});
 
 
 
-$('#update-btn').on('click', function()
-{	
+
+function startUpdating()
+{
+	 
 	tablesuccessionarr = $('.tablesuccession').val().split(',');
 	$('.update-status-cont').empty();
 	
 	updateThisTable(tablesuccessionarr[0]);
+}
 
-			
-
-});
 
 function updateThisTable(tablename)
 {
@@ -31,7 +42,7 @@ function updateThisTable(tablename)
 				if(data.substring(0, 7) == "success")
 				{
 					$('.'+tablename+'-updating').html(tablename+' updated'+successicon);
-					tablesuccessionarr.splice(0,1); 
+					tablesuccessionarr.splice(0,1); //removes first(tablessuccessionarr[0]) table from list of tables. The second one then becomes the first one.
 					if(tablesuccessionarr[0] != tablesuccessionarr[lastTableIndex])//if this is not last item in array
 					{
 						updateThisTable(tablesuccessionarr[0]);
@@ -59,6 +70,9 @@ $('body').on('click','.retrybtn', function()
 		updateThisTable(tablesuccessionarr[0]);
 	}
 });
+
+
+
 
 	/*
 	$('.update-status-cont').append('<li class="glog_product-updating">updating glog_product'+updatingicon+'</li>');

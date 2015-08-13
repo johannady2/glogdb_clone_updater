@@ -80,3 +80,11 @@ ul.update-status-cont > li
 	width: 50%;
     height: 200px;
 }
+
+/*Countdown Override*/
+.is-countdown {
+    border: 1px solid #ccc;
+    height: 51px;
+    background-color: #eee;
+    width: 50%;
+}

@@ -283,7 +283,7 @@ $updatedIds = "";
 $errors = array();
 
 
-for($i = 0 ; $i <= (sizeof($arr)/45)-1 ; $i++)//AllData/columnsPerData
+for($i = 0 ; $i <= (sizeof($arr)/46)-1 ; $i++)//AllData/columnsPerData
 {
 
 	if(mysql_error($conn) != "")
@@ -297,8 +297,9 @@ for($i = 0 ; $i <= (sizeof($arr)/45)-1 ; $i++)//AllData/columnsPerData
 	
 	
 		
-			//echo 'replaced into '.$id_attribute[$i] . '<br>';
+					//echo 'replaced into '.$id_attribute[$i] . '<br>';
 			mysql_query("REPLACE INTO glogdb_clone.glog_orders (id_order,reference,id_shop_group,id_shop,id_carrier,id_lang,id_customer,id_cart,id_currency,id_address_delivery,id_address_invoice,current_state,secure_key,payment,conversion_rate,module,recyclable,gift,gift_message,mobile_theme,shipping_number,total_discounts,total_discounts_tax_incl,total_discounts_tax_excl,total_paid,total_paid_tax_incl,total_paid_tax_excl,total_paid_real,total_products_wt,total_shipping,total_shipping_tax_incl,total_shipping_tax_excl,carrier_tax_rate,total_wrapping,total_wrapping_tax_incl,total_wrapping_tax_excl,round_mode,invoice_number,delivery_number,invoice_date,delivery_date,valid,date_add,date_upd)VALUES(".$id_order[$i].",'".$reference[$i]."',".$id_shop_group[$i].",".$id_shop[$i].",".$id_carrier[$i].",".$id_lang[$i].",".$id_customer[$i].",".$id_cart[$i].",".$id_currency[$i].",".$id_address_delivery[$i].",".$id_address_invoice[$i].",".$current_state[$i].",'".$secure_key[$i]."','".$payment[$i]."',".$conversion_rate[$i].",'".$module[$i]."',".$recyclable[$i].",".$gift[$i].",'".$gift_message[$i]."',".$mobile_theme[$i].",'".$shipping_number[$i]."',".$total_discounts[$i].",".$total_discounts_tax_incl[$i].",".$total_discounts_tax_excl[$i].",".$total_paid[$i].",".$total_paid_tax_incl[$i].",".$total_paid_tax_excl[$i].",".$total_paid_real[$i].",".$total_products_wt[$i].",".$total_shipping[$i].",".$total_shipping_tax_incl[$i].",".$total_shipping_tax_excl[$i].",".$carrier_tax_rate[$i].",".$total_wrapping[$i].",".$total_wrapping_tax_incl[$i].",".$total_wrapping_tax_excl[$i].",".$round_mode[$i].",".$invoice_number[$i].",".$delivery_number[$i].",'".$invoice_date[$i]."','".$delivery_date[$i]."',".$valid[$i].",'".$date_add[$i]."','".$date_upd[$i]."');",$conn);
+		
 		
 		$insertedIds .= $id_order[$i].",";
 		
