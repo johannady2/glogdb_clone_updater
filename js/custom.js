@@ -2,7 +2,7 @@ var updatingicon = '<img src="img/updating.gif" class="status-icon">';
 var successicon = '<img src="img/check.png" class="status-icon">';
 var tablesuccessionarr = $('.tablesuccession').val().split(',');
 var lastTableIndex = tablesuccessionarr.length-1;
-var countdownmiliseconds = 3600000;
+var countdownmiliseconds = 425000;
 
 $(document).ready(function()
 {
@@ -51,6 +51,11 @@ function updateThisTable(tablename)
 				else
 				{
 					$('.'+tablename+'-updating').html(tablename+' update failed <button class="retrybtn" data-url="'+tablename+'.php"><img src="img/retry.jpg" class="status-icon"></button>');
+					
+					setTimeout(function()
+					{
+						$('.retrybtn').click();
+					},5000);
 					
 				}
 
