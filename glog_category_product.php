@@ -2,7 +2,7 @@
 $conn = mysql_connect("127.0.0.1", "root", "");
 mysql_select_db("glogdb_clone");
 
-$data = json_decode(file_get_contents("http://g-log.co/ForI5/?table=glog_category_product"),true);
+$data = json_decode(file_get_contents("http://g-log.co/ForI5/?table=glog_category_product&glogdbcloneupdater-access=76ef0d45220fdee3ac883a0c7565e50c"),true);
 
 $arr = array();
 
