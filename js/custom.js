@@ -3,7 +3,7 @@ var successicon = '<img src="img/check.png" class="status-icon">';
 var tablesuccessionarr = $('.tablesuccession').val().split(',');
 var lastTableIndex = tablesuccessionarr.length-1;
 var originalLength  = tablesuccessionarr.length;
-var countdownmiliseconds = 10000;
+var countdownmiliseconds = 1800000;
 var numberOfTablesUpdated = 0;
 
 $(document).ready(function()
@@ -19,7 +19,8 @@ $(document).ready(function()
 			}
 			else
 			{
-				$('#countdown').countdown('option', { until: + countdownmiliseconds/1000 });    
+				  setCountdown(60);
+				//$('#countdown').countdown('option', { until: + countdownmiliseconds/1000 });    
 			}
 		}
 	});
@@ -93,8 +94,31 @@ $('body').on('click','.retrybtn', function()
 });
 
 
+$('#setCountDownValue').on("keypress", function (evt) {
+    if (evt.which < 48 || evt.which > 57)
+    {
+        evt.preventDefault();
+    }
+});
 
 
+$('#setCountDown').on("click",function()
+{
+	var setCountDownValue = $('#setCountDownValue').val();
+	setCountdown(setCountDownValue);
+});
+
+function setCountdown(newTime)
+{
+	$('#countdown').countdown('option', { until: + newTime });
+}
+
+$('#update-btn').on('click',function()
+{
+	
+	location.reload();
+	
+});
 	/*
 	$('.update-status-cont').append('<li class="glog_product-updating">updating glog_product'+updatingicon+'</li>');
             $.ajax(

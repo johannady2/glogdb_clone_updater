@@ -81,6 +81,24 @@ ul.update-status-cont > li
     height: 200px;
 }
 
+.fieldgroup
+{
+	font-family:arial;
+	margin: 10px 0px;
+}
+
+#setCountDown
+{
+    background-color: #3181D8;
+    border: 0px;
+    /* border-radius: 5px; */
+    font-size: 18px;
+    color: #ffffff;
+    padding: 0px 7px;
+    cursor: pointer;
+    margin: 2px 2px;
+}
+
 /*Countdown Override*/
 .is-countdown {
     border: 1px solid #ccc;
