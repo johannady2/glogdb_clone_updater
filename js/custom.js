@@ -3,30 +3,33 @@ var successicon = '<img src="img/check.png" class="status-icon">';
 var tablesuccessionarr = $('.tablesuccession').val().split(',');
 var lastTableIndex = tablesuccessionarr.length-1;
 var originalLength  = tablesuccessionarr.length;
-var countdownmiliseconds = 1800000;
 var numberOfTablesUpdated = 0;
+var countdownmiliseconds = $('#setCountDownValue').val();
+//alert(countdownmiliseconds);
 
-$(document).ready(function()
-{
+
+				
 	startUpdating();
-	$("#countdown").countdown({
-		until: new Date(new Date().getTime() + (countdownmiliseconds )),
-		onExpiry:  function() 
-		{
-			if(numberOfTablesUpdated == originalLength)//if all tables are updated
+
+		$("#countdown").countdown({
+			until: new Date(new Date().getTime() + countdownmiliseconds*1000),
+			onExpiry:  function() 
 			{
-				location.reload(); 
+				if(numberOfTablesUpdated == originalLength)//if all tables are updated
+				{
+					location.reload(); 
+				}
+				else
+				{
+					  setCountdown(60);
+					//$('#countdown').countdown('option', { until: + countdownmiliseconds/1000 });    
+				}
 			}
-			else
-			{
-				  setCountdown(60);
-				//$('#countdown').countdown('option', { until: + countdownmiliseconds/1000 });    
-			}
-		}
-	});
+		});
+
 	
 	
-});
+
 
 
 
@@ -95,21 +98,17 @@ $('body').on('click','.retrybtn', function()
 
 
 $('#setCountDownValue').on("keypress", function (evt) {
-    if (evt.which < 48 || evt.which > 57)
+    if (evt.which < 48 || evt.which > 57 || evt.which == 8 ||  evt.which == 46)
     {
         evt.preventDefault();
     }
 });
 
 
-$('#setCountDown').on("click",function()
-{
-	var setCountDownValue = $('#setCountDownValue').val();
-	setCountdown(setCountDownValue);
-});
 
 function setCountdown(newTime)
 {
+
 	$('#countdown').countdown('option', { until: + newTime });
 }
 
@@ -119,27 +118,38 @@ $('#update-btn').on('click',function()
 	location.reload();
 	
 });
-	/*
-	$('.update-status-cont').append('<li class="glog_product-updating">updating glog_product'+updatingicon+'</li>');
-            $.ajax(
-			{
-               type: "POST",
-               url: "glog_product.php",
-               cache: false,
-               success: function(data)
-               {
-				
-				if(data.substring(0, 7) == "success")
-				{
-					$('.glog_product-updating').html('glog_product updated'+successicon);
-				}
-				else
-				{
-					$('.glog_product-updating').html('glog_product update failed <button class="retrybtn" data-url="glog_product.php"><img src="img/retry.jpg" class="status-icon"></button>');
-				}
 
-				
-				
-               }
-			});//data: data, // data to send to above script page if any
-	*/
+
+
+function runSETusedmilisecondsFile(usedvalue)
+{
+	$.ajax(
+		{
+		   type: "POST",
+		   url: "SETusedmiliseconds.php",
+		   data: {"usedcountdownseconds":usedvalue},
+		   datatype: "json",
+		   cache: false,
+		   success: function(data)
+		   {
+			 //alert(data);
+		   }
+		});
+}
+
+
+$('#setCountDown').on('click',function()
+{
+	var inputedseconds = $('#setCountDownValue').val();
+	setCountdown(inputedseconds);
+	var inputedsecondsTOmiliseconds = inputedseconds*1000;
+	if(inputedseconds != '' || inputedseconds != 0)
+	{
+		runSETusedmilisecondsFile(inputedsecondsTOmiliseconds);
+	}
+	else
+	{
+		alert('invalide value');
+	}
+});
+

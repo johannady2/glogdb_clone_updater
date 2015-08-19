@@ -1,37 +1,3 @@
-<?php
-//$_COOKIE['CustomcountDownValue'] = 999;
-echo $_COOKIE['CustomcountDownValue'];
-if(!isset($_COOKIE['CustomcountDownValue']))
-{
-	
-	$_COOKIE['DefaultcountDownValue'] = 1800000;
-	echo 'not set'.$_COOKIE['DefaultcountDownValue']; 
-}
-else
-{
-	
-	setcookie(
-	  'CustomcountDownValue',
-	  $_COOKIE['CustomcountDownValue'],
-	  time() + (500* 365 * 24 * 60 * 60)
-	);
-
-	
-	$_COOKIE['DefaultcountDownValue'] = $_COOKIE['CustomcountDownValue'];
-	echo 'set'.$_COOKIE['DefaultcountDownValue'];
-	
-	
-
-}
-
-
-setcookie(
-  'DefaultcountDownValue',
-  $_COOKIE['DefaultcountDownValue'],
-  time() + (500* 365 * 24 * 60 * 60)
-);
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,7 +26,7 @@ setcookie(
 		<div class="content">
 			<div id="countdown"></div>
 			
-			<div class="fieldgroup"><span>Set Countdown(miliseconds):<input type="text" value="<?php echo $_COOKIE['DefaultcountDownValue']; ?>" id="setCountDownValue"><button id="setCountDown">Save</button></span></div>
+			<div class="fieldgroup"><span>Set Countdown(seconds):<input type="text" value="<?php if(isset($_COOKIE['UsedcountDownValue'])){echo $_COOKIE['UsedcountDownValue']/1000;}else{ echo 300;} ?>" id="setCountDownValue"><button id="setCountDown">Save</button></span></div>
 			
 			
 			<br>
@@ -88,7 +54,8 @@ setcookie(
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="js/custom.js"></script>
+
 <script type="text/javascript" src="js/jquery.plugin.js"></script> <!--http://keith-wood.name/countdown.html-->
 <script type="text/javascript" src="js/jquery.countdown.js"></script>
+<script src="js/custom.js"></script>
 </html>
