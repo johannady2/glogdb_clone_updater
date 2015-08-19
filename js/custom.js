@@ -2,13 +2,26 @@ var updatingicon = '<img src="img/updating.gif" class="status-icon">';
 var successicon = '<img src="img/check.png" class="status-icon">';
 var tablesuccessionarr = $('.tablesuccession').val().split(',');
 var lastTableIndex = tablesuccessionarr.length-1;
-var countdownmiliseconds = 3600000;
+var originalLength  = tablesuccessionarr.length;
+var countdownmiliseconds = 10000;
+var numberOfTablesUpdated = 0;
 
 $(document).ready(function()
 {
 	startUpdating();
 	$("#countdown").countdown({
-		until: new Date(new Date().getTime() + (countdownmiliseconds )),onExpiry:  function() { location.reload(); }
+		until: new Date(new Date().getTime() + (countdownmiliseconds )),
+		onExpiry:  function() 
+		{
+			if(numberOfTablesUpdated == originalLength)//if all tables are updated
+			{
+				location.reload(); 
+			}
+			else
+			{
+				$('#countdown').countdown('option', { until: + countdownmiliseconds/1000 });    
+			}
+		}
 	});
 	
 	
@@ -43,6 +56,9 @@ function updateThisTable(tablename)
 				{
 					$('.'+tablename+'-updating').html(tablename+' updated'+successicon);
 					tablesuccessionarr.splice(0,1); //removes first(tablessuccessionarr[0]) table from list of tables. The second one then becomes the first one.
+					
+					numberOfTablesUpdated++;
+					
 					if(tablesuccessionarr[0] != tablesuccessionarr[lastTableIndex])//if this is not last item in array
 					{
 						updateThisTable(tablesuccessionarr[0]);
