@@ -21,7 +21,7 @@ var countdownmiliseconds = $('#setCountDownValue').val();
 				}
 				else
 				{
-					  setCountdown(60);
+					  setCountdown(120);
 					//$('#countdown').countdown('option', { until: + countdownmiliseconds/1000 });    
 				}
 			}
@@ -97,13 +97,24 @@ $('body').on('click','.retrybtn', function()
 });
 
 
-$('#setCountDownValue').on("keypress", function (evt) {
-    if (evt.which < 48 || evt.which > 57 || evt.which == 8 ||  evt.which == 46)
-    {
-        evt.preventDefault();
-    }
-});
-
+$('#setCountDownValue').keydown(function(event) {
+				if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode > 112 ) {
+ 
+				} 
+				else {
+					if (event.keyCode < 95) {
+						if (event.keyCode < 49 || event.keyCode > 57 ) {
+							event.preventDefault();
+						}
+					} 	
+					else {
+						if (event.keyCode < 97 || event.keyCode > 105 ) {
+							event.preventDefault();
+						}
+					}	
+				}
+ 
+			});
 
 
 function setCountdown(newTime)
@@ -141,15 +152,21 @@ function runSETusedmilisecondsFile(usedvalue)
 $('#setCountDown').on('click',function()
 {
 	var inputedseconds = $('#setCountDownValue').val();
-	setCountdown(inputedseconds);
+	
 	var inputedsecondsTOmiliseconds = inputedseconds*1000;
-	if(inputedseconds != '' || inputedseconds != 0)
+	if(inputedseconds != '' && inputedseconds != 0 && inputedseconds != NaN)
 	{
+		setCountdown(inputedseconds);
 		runSETusedmilisecondsFile(inputedsecondsTOmiliseconds);
 	}
 	else
 	{
+		
+		setCountdown(300);
+		runSETusedmilisecondsFile(300);
+		$('#setCountDownValue').val(300);
 		alert('invalide value');
+		
 	}
 });
 
