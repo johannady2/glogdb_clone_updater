@@ -97,24 +97,31 @@ $('body').on('click','.retrybtn', function()
 });
 
 
-$('#setCountDownValue').keydown(function(event) {
-				if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode > 112 ) {
- 
-				} 
-				else {
-					if (event.keyCode < 95) {
-						if (event.keyCode < 49 || event.keyCode > 57 ) {
-							event.preventDefault();
-						}
-					} 	
-					else {
-						if (event.keyCode < 97 || event.keyCode > 105 ) {
-							event.preventDefault();
-						}
-					}	
+$('#setCountDownValue').keydown(function(event)
+{
+
+				if( event.keyCode >= 1 && event.keyCode < 8)
+				{
+					event.preventDefault();
 				}
- 
-			});
+				else if( event.keyCode >8 && event.keyCode < 37)
+				{
+					event.preventDefault();
+				}
+				else if( event.keyCode >38 && event.keyCode < 48)
+				{
+					event.preventDefault();
+				}
+				else if( event.keyCode >57 && event.keyCode < 96)
+				{
+					event.preventDefault();
+				}
+				else if(event.keyCode > 105)
+				{
+					event.preventDefault();
+				}
+				
+});
 
 
 function setCountdown(newTime)
