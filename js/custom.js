@@ -108,7 +108,11 @@ $('#setCountDownValue').keydown(function(event)
 				{
 					event.preventDefault();
 				}
-				else if( event.keyCode >38 && event.keyCode < 48)
+				else if(event.keyCode > 37 && event.keyCode < 39)
+				{
+					event.preventDefault();
+				}
+				else if( event.keyCode >39 && event.keyCode < 48)
 				{
 					event.preventDefault();
 				}
