@@ -51,6 +51,7 @@ $id_order = array();
 $date_add = array();
 
 
+
 foreach($arr as $key => $value)
 {
 	foreach($value as $as => $info)
@@ -59,7 +60,7 @@ foreach($arr as $key => $value)
 		{
 			array_push($id, $info);
 		}
-		else if($as = 'id_seller_order')
+		else if($as == 'id_seller_order')
 		{
 			array_push($id_seller_order, $info);
 		}
@@ -73,7 +74,7 @@ foreach($arr as $key => $value)
 		}
 		else if($as == 'customer_name')
 		{
-			array_push($customer_name , addslashes($customer_name));
+			array_push($customer_name , addslashes($info));
 		}
 		else if($as == 'product_name')
 		{
@@ -95,7 +96,7 @@ foreach($arr as $key => $value)
 		{
 			array_push($id_order,$info);
 		}
-		else if($sd == 'date_add')
+		else if($as == 'date_add')
 		{
 			array_push($date_add,addslashes($info));
 		}
@@ -118,13 +119,13 @@ for($i = 0 ; $i <= (sizeof($arr)/12)-1 ; $i++)//AllData/columnsPerData
 	}
 	//echo $id_product[$i].'- Numrrows = '.$numrows.'<br>';
 	 
-			
-	
+
 		
 			//echo 'replaced into '.$id_attribute[$i] . '<br>';
-			mysql_query("REPLACE INTO glogdb_clone.glog_marketplace_commision_calc (id,id_seller_order,product_id,customer_id,customer_name,product_name,price,quantity,commision,id_order,date_add)VALUES(".$id[$i].",".$id_seller_order[$i].",".$product_id[$i].",".$customer_id[$id].",'".$customer_name[$i]."','".$product_name[$i]."',".$price[$i].",".$quantity[$i].",".$commision[$i].",".$id_order[$i].",'".$date_add[$i]."');",$conn);
+			mysql_query("REPLACE INTO glogdb_clone.glog_marketplace_commision_calc (id,id_seller_order,product_id,customer_id,customer_name,product_name,price,quantity,commision,id_order,date_add)VALUES(".$id[$i].",".$id_seller_order[$i].",".$product_id[$i].",".$customer_id[$i].",'".$customer_name[$i]."','".$product_name[$i]."',".$price[$i].",".$quantity[$i].",".$commision[$i].",".$id_order[$i].",'".$date_add[$i]."');",$conn);
 		
-		$insertedIds .= $id[$i].",";
+		
+
 		
 		
 		if(mysql_error($conn) != "")
